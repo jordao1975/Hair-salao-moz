@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}HAir Salão Moz - Sistema de Fila{% endblock %}</title>
+    
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    
+    <!-- AOS - Animate On Scroll -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    
+    <style>
+        .navbar-3d {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            transform-style: preserve-3d;
+        }
+        
+        .card-3d {
+            transform-style: preserve-3d;
+            transition: transform 0.5s;
+        }
+        
+        .card-3d:hover {
+            transform: rotateY(5deg) rotateX(5deg) translateY(-10px);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>✂️ HAir Salão Moz - Gestão de Fila</h1>
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('index') }}">Início</a></li>
+                {% if current_user.is_authenticated %}
+                    <li><a href="{{ url_for('dashboard') }}">Painel</a></li>
+                    <li><a href="{{ url_for('list_clientes') }}">Clientes na Fila</a></li>
+                    <li><a href="{{ url_for('atendimento_atual') }}">Em Atendimento</a></li>
+                    <li><a href="{{ url_for('list_servicos') }}">Serviços</a></li>
+                    <li><a href="{{ url_for('report') }}">Relatórios</a></li>
+                    <li><a href="{{ url_for('logout') }}">Sair</a></li>
+                {% else %}
+                    <li><a href="{{ url_for('auto_registro') }}">Entrar na Fila</a></li>
+                    <li><a href="{{ url_for('painel_publico') }}">Painel Público</a></li>
+                    <li><a href="{{ url_for('login') }}">Login (Staff)</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </header>
+    <main>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <ul class="flashes">
+                {% for category, message in messages %}
+                    <li class="{{ category }}">{{ message }}</li>
+                {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+        {% block content %}{% endblock %}
+    </main>
+    <footer class="text-white text-center py-5 mt-5" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); box-shadow: 0 -5px 20px rgba(0,0,0,0.1);">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h5 class="fw-bold mb-3">✂️ HAir Salão Moz</h5>
+                    <p class="mb-3">Sistema inteligente de gestão de filas - Experiência premium para seus clientes</p>
+                    <div class="d-flex justify-content-center gap-3 mb-3">
+                        <i class="bi bi-scissors fs-4"></i>
+                        <i class="bi bi-brush-fill fs-4"></i>
+                        <i class="bi bi-heart-fill fs-4"></i>
+                        <i class="bi bi-star-fill fs-4"></i>
+                    </div>
+                    <hr style="border-color: rgba(255,255,255,0.3); margin: 2rem auto; max-width: 300px;">
+                    <p class="mb-2">&copy; 2024 HAir Salão Moz. Todos os direitos reservados.</p>
+                    <p class="mb-0">
+                        <span class="badge" style="background: rgba(255,255,255,0.2); padding: 0.5rem 1rem; font-size: 0.9rem;">
+                            Desenvolvido com 💛 por <a href="https://sitoe-services.vercel.app" target="_blank" class="text-white text-decoration-none fw-bold">Sitoe Service</a> 🚀
+                        </span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- AOS - Animate On Scroll -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    
+    <!-- Custom JS -->
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    
+    <script>
+        // Inicializar AOS
+        AOS.init({
+            duration: 800,
+            easing: 'ease-in-out',
+            once: false,
+            mirror: true
+        });
+    </script>
+</body>
+</html>

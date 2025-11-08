@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel Público - Salão de Beleza</title>
+    
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%, #f093fb 100%);
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow-x: hidden;
+        }
+        
+        .painel-container {
+            max-width: 1000px;
+            margin: 30px auto;
+            perspective: 1000px;
+        }
+        
+        .painel-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 30px;
+            box-shadow: 0 30px 80px rgba(0,0,0,0.3);
+            padding: 40px;
+            transform-style: preserve-3d;
+            animation: cardFloat 6s ease-in-out infinite;
+        }
+        
+        @keyframes cardFloat {
+            0%, 100% { transform: translateY(0px) rotateX(0deg); }
+            50% { transform: translateY(-20px) rotateX(2deg); }
+        }
+        
+        .painel-header {
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+        }
+        
+        .painel-header h1 {
+            font-size: 3rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            animation: titlePulse 3s ease-in-out infinite;
+        }
+        
+        @keyframes titlePulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
+        .proximo-cliente {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            padding: 60px 40px;
+            border-radius: 25px;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(245, 87, 108, 0.4);
+            transform-style: preserve-3d;
+            animation: clienteShow 1s ease-out;
+        }
+        
+        @keyframes clienteShow {
+            from {
+                opacity: 0;
+                transform: scale(0.8) rotateY(-90deg);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) rotateY(0deg);
+            }
+        }
+        
+        .proximo-cliente h2 {
+            color: white;
+            font-size: 2rem;
+            margin-bottom: 30px;
+            text-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            animation: bellRing 2s ease-in-out infinite;
+        }
+        
+        @keyframes bellRing {
+            0%, 100% { transform: rotate(0deg); }
+            10%, 30% { transform: rotate(-10deg); }
+            20%, 40% { transform: rotate(10deg); }
+            50% { transform: rotate(0deg); }
+        }
+        
+        .cliente-nome {
+            font-size: 4rem;
+            font-weight: 900;
+            color: white;
+            text-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            margin: 30px 0;
+            animation: nameGlow 2s ease-in-out infinite;
+            transform: translateZ(50px);
+        }
+        
+        @keyframes nameGlow {
+            0%, 100% {
+                text-shadow: 0 0 20px rgba(255,255,255,0.5),
+                             0 0 40px rgba(255,255,255,0.3);
+            }
+            50% {
+                text-shadow: 0 0 30px rgba(255,255,255,0.8),
+                             0 0 60px rgba(255,255,255,0.5);
+            }
+        }
+        
+        .fila-vazia {
+            text-align: center;
+            padding: 80px 40px;
+            background: linear-gradient(135deg, #e0e7ff 0%, #f9fafb 100%);
+            border-radius: 25px;
+            animation: fadeIn 1s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .fila-vazia-icon {
+            font-size: 5rem;
+            animation: bounce 2s ease-in-out infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        .live-indicator {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            background: #ef4444;
+            border-radius: 50%;
+            animation: pulse 2s ease-in-out infinite;
+            box-shadow: 0 0 10px #ef4444;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.2); }
+        }
+        
+        .floating-icon {
+            position: absolute;
+            font-size: 3rem;
+            opacity: 0.15;
+            animation: floatIcon 10s ease-in-out infinite;
+        }
+        
+        @keyframes floatIcon {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-30px) rotate(10deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="painel-container">
+        <div class="painel-card">
+            <!-- Ícones decorativos flutuantes -->
+            <i class="bi bi-scissors floating-icon" style="top: 10%; left: 5%;"></i>
+            <i class="bi bi-brush-fill floating-icon" style="top: 15%; right: 8%; animation-delay: 2s;"></i>
+            <i class="bi bi-heart-fill floating-icon" style="bottom: 10%; left: 10%; animation-delay: 4s;"></i>
+            
+            <div class="painel-header">
+                <h1 class="mb-3">
+                    <i class="bi bi-scissors"></i> Salão de Beleza
+                </h1>
+                <p class="text-muted fs-5 mb-2">Painel Público de Atendimento</p>
+                <div class="d-flex align-items-center justify-content-center gap-2">
+                    <span class="live-indicator"></span>
+                    <span class="badge bg-danger">AO VIVO</span>
+                    <small class="text-muted">Atualiza a cada 5 segundos</small>
+                </div>
+            </div>
+            
+            <div id="queue-status">
+                <!-- Próximo Cliente -->
+                <div class="proximo-cliente" id="proximo-display" style="display: none;">
+                    <h2>
+                        <i class="bi bi-bell-fill"></i> PRÓXIMO CLIENTE
+                    </h2>
+                    <div class="cliente-nome" id="cliente-nome">-</div>
+                    <p id="cliente-telefone" class="fs-4 text-white mb-0"></p>
+                    <div class="mt-4">
+                        <span class="badge bg-white text-dark fs-5 px-4 py-2">
+                            <i class="bi bi-clock-fill me-2"></i>
+                            <span id="tempo-espera">Aguarde...</span>
+                        </span>
+                    </div>
+                </div>
+                
+                <!-- Fila Vazia -->
+                <div class="fila-vazia" id="fila-vazia">
+                    <div class="fila-vazia-icon">😊</div>
+                    <h2 class="mt-4 mb-3">Fila Vazia</h2>
+                    <p class="text-muted fs-5 mb-0">
+                        Não há clientes aguardando no momento
+                    </p>
+                </div>
+            </div>
+
+            <div class="d-flex gap-3 justify-content-center mt-4 flex-wrap">
+                <a href="{{ url_for('auto_registro') }}" class="btn btn-warning btn-lg px-5 py-3 shadow">
+                    <i class="bi bi-person-plus-fill me-2"></i>Entrar na Fila
+                </a>
+                <a href="{{ url_for('index') }}" class="btn btn-outline-secondary btn-lg px-5 py-3">
+                    <i class="bi bi-house-fill me-2"></i>Início
+                </a>
+            </div>
+            
+            <!-- Rodapé com créditos -->
+            <div class="text-center mt-5 pt-4 border-top">
+                <p class="text-muted small mb-0">
+                    Desenvolvido por <a href="https://sitoe-services.vercel.app" target="_blank" class="text-decoration-none fw-bold text-primary">Sitoe Service</a> 🚀
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        let tempoInicio = Date.now();
+        
+        function atualizarTempo() {
+            const segundos = Math.floor((Date.now() - tempoInicio) / 1000);
+            const minutos = Math.floor(segundos / 60);
+            const segs = segundos % 60;
+            document.getElementById('tempo-espera').textContent = 
+                `Chamado há ${minutos}:${segs.toString().padStart(2, '0')}`;
+        }
+        
+        function atualizarPainel() {
+            fetch('{{ url_for("painel_next") }}')
+                .then(response => response.json())
+                .then(data => {
+                    const proximoDisplay = document.getElementById('proximo-display');
+                    const filaVazia = document.getElementById('fila-vazia');
+                    const clienteNome = document.getElementById('cliente-nome');
+                    const clienteTelefone = document.getElementById('cliente-telefone');
+                    
+                    if (data.status === 'ok' && data.cliente) {
+                        proximoDisplay.style.display = 'block';
+                        filaVazia.style.display = 'none';
+                        
+                        // Animação ao mudar cliente
+                        clienteNome.style.animation = 'none';
+                        setTimeout(() => {
+                            clienteNome.style.animation = '';
+                        }, 10);
+                        
+                        clienteNome.textContent = data.cliente.nome;
+                        
+                        if (data.cliente.telefone) {
+                            clienteTelefone.innerHTML = '<i class="bi bi-telephone-fill me-2"></i>' + data.cliente.telefone;
+                        } else {
+                            clienteTelefone.textContent = '';
+                        }
+                        
+                        tempoInicio = Date.now();
+                    } else {
+                        proximoDisplay.style.display = 'none';
+                        filaVazia.style.display = 'block';
+                    }
+                })
+                .catch(error => {
+                    console.error('Erro ao atualizar painel:', error);
+                });
+        }
+        
+        // Atualizar a cada 5 segundos
+        atualizarPainel();
+        setInterval(atualizarPainel, 5000);
+        setInterval(atualizarTempo, 1000);
+        
+        // Som de notificação (opcional)
+        function playNotificationSound() {
+            const audio = new Audio('data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmwhBTGH0fPTgjMGHm7A7+OZUR4NVK7l8LdjHQU7k9nyzn0pBidzy/LaizsIGGS46+mjVhQMS KDk8dRlGQU+ltv0yH4rBSt+zPLaizsIGGS46+mjVhQMSKDk8dRlGQU+ltv0yH4rBSt+zPLaizsIGGS46+mjVhQMSKDk8dRlGQU+ltv0yH4rBSt+zPLaizsIGGS46+mjVhQMSKDk8dRlGQU+ltv0yH4rBSt+zPLaizsIGGS46+mjVhQMSKDk8dRlGQU+ltv0yH4rBSt+zPLaizsIGGS46+mjVhQMSKDk8dRlGQU+ltv0yH4rBSt+zPLaizsIGGS46+mjVhQMSKDk8dRlGQU+ltv0yH4rBSt+zPLaizsIGGS46+mjVhQMSKDk8dRlGQU+ltv0yH4rBSt+zPLaizsIGGS46+mjVhQMSKDk8dRlGQU+ltv0yH4rBQ==');
+            audio.play().catch(e => console.log('Som não disponível'));
+        }
+    </script>
+</body>
+</html>

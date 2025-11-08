@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block title %}Atendimentos em Curso - Salão de Beleza{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>💈 Clientes em Atendimento</h1>
+    
+    <div style="margin-bottom: 20px;">
+        <a href="{{ url_for('dashboard') }}" class="btn btn-secondary">⬅️ Voltar ao Painel</a>
+        <a href="{{ url_for('list_clientes') }}" class="btn btn-info">Ver Fila de Espera</a>
+    </div>
+
+    {% if atendimentos %}
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Cliente</th>
+                <th>Telefone</th>
+                <th>Serviço</th>
+                <th>Preço</th>
+                <th>Hora de Chegada</th>
+                <th>Hora da Chamada</th>
+                <th>Tempo Decorrido</th>
+                <th>Ação</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for atendimento in atendimentos %}
+            <tr>
+                <td><strong>{{ atendimento.nome }}</strong></td>
+                <td>{{ atendimento.telefone or '-' }}</td>
+                <td>{{ atendimento.servico or 'Não especificado' }}</td>
+                <td>{{ "%.2f"|format(atendimento.preco) if atendimento.preco else '-' }} MT</td>
+                <td>{{ atendimento.entrada }}</td>
+                <td>{{ atendimento.chamada }}</td>
+                <td>
+                    <span class="badge">Em atendimento</span>
+                </td>
+                <td>
+                    <form method="POST" action="{{ url_for('finish_atendimento', atendimento_id=atendimento.id) }}" style="display:inline;">
+                        <input type="number" name="valor_pago" placeholder="Valor pago (MT)" step="0.01" min="0" style="width: 120px; padding: 5px;">
+                        <button type="submit" class="btn btn-success" onclick="return confirm('Finalizar este atendimento?')">
+                            ✅ Finalizar
+                        </button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <div class="alert alert-info">
+        <p><strong>Nenhum cliente em atendimento no momento.</strong></p>
+        <p>Use o botão "Chamar Próximo" na lista de espera para iniciar um atendimento.</p>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

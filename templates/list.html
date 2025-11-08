@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block title %}Fila de Clientes - Salão de Beleza{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Fila de Clientes</h1>
+    <p style="color: #666; margin-bottom: 20px;">
+        <strong>Sistema FIFO:</strong> O primeiro cliente a chegar é o primeiro a ser atendido.
+    </p>
+    
+    <div style="margin-bottom: 20px;">
+        <a href="{{ url_for('add') }}" class="btn btn-primary">➕ Adicionar Cliente</a>
+        <form method="POST" action="{{ url_for('chamar_proximo') }}" style="display:inline;">
+            <button type="submit" class="btn btn-success">📢 Chamar Próximo</button>
+        </form>
+    </div>
+
+    {% if clientes %}
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Posição</th>
+                <th>Nome</th>
+                <th>Telefone</th>
+                <th>Serviço</th>
+                <th>Preço</th>
+                <th>Duração</th>
+                <th>Chegada</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for cliente in clientes %}
+            <tr>
+                <td><strong>{{ loop.index }}º</strong></td>
+                <td>{{ cliente.nome }}</td>
+                <td>{{ cliente.telefone or '-' }}</td>
+                <td>{{ cliente.servico or 'Não especificado' }}</td>
+                <td>{{ "%.2f"|format(cliente.preco) if cliente.preco else '-' }} MT</td>
+                <td>{{ cliente.duracao_estimada or '-' }} min</td>
+                <td>{{ cliente.created_at }}</td>
+                <td>
+                    <a href="{{ url_for('edit_cliente', id=cliente.id) }}" class="btn-small">Editar</a>
+                    <form action="{{ url_for('delete_cliente', id=cliente.id) }}" method="POST" style="display:inline;">
+                        <button type="submit" class="btn-small btn-danger" onclick="return confirm('Tem certeza que deseja remover este cliente?')">Remover</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <div class="alert alert-info">
+        <p>Nenhum cliente na fila no momento.</p>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

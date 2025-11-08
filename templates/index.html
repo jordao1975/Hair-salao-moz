@@ -1,0 +1,437 @@
+{% extends "base.html" %}
+
+{% block title %}Início - HAir Salão Moz{% endblock %}
+
+{% block content %}
+<div class="container-fluid px-0">
+    <!-- Hero Section -->
+    <section class="position-relative overflow-hidden hero-section" aria-labelledby="main-heading">
+        <!-- Dark overlay for readability -->
+        <div class="position-absolute top-0 start-0 w-100 h-100 hero-overlay" aria-hidden="true"></div>
+        
+        <!-- Animated Background Shapes -->
+        <div class="position-absolute w-100 h-100 hero-background" aria-hidden="true">
+            <div class="position-absolute hero-icon hero-scissors">
+                <i class="bi bi-scissors" aria-hidden="true"></i>
+            </div>
+            <div class="position-absolute hero-icon hero-brush">
+                <i class="bi bi-brush-fill" aria-hidden="true"></i>
+            </div>
+            <div class="position-absolute hero-icon hero-heart">
+                <i class="bi bi-heart-fill" aria-hidden="true"></i>
+            </div>
+            <div class="position-absolute hero-icon hero-star">
+                <i class="bi bi-star-fill" aria-hidden="true"></i>
+            </div>
+        </div>
+        
+        <div class="container position-relative" style="z-index: 10;">
+            <div class="row align-items-center hero-content">
+                <div class="col-lg-10 mx-auto text-center">
+                    <!-- Badge de Destaque -->
+                    <div data-aos="fade-down" data-aos-duration="800">
+                        <span class="badge hero-badge mb-4" role="status" aria-label="Sistema número um em Moçambique">
+                            ⭐ Sistema #1 em Moçambique ⭐
+                        </span>
+                    </div>
+                    
+                    <!-- Título Principal -->
+                    <h1 id="main-heading" class="hero-title fw-bold text-white mb-4" data-aos="zoom-in" data-aos-delay="200">
+                        ✂️ Transforme Seu<br>
+                        <span class="hero-highlight">
+                            HAir Salão Moz
+                        </span>
+                    </h1>
+                    
+                    <!-- Subtítulo -->
+                    <p class="hero-subtitle text-white mb-5 mx-auto" data-aos="fade-up" data-aos-delay="400">
+                        Sistema Inteligente de Gestão de Filas<br>
+                        <strong>Sem Estresse • Sem Espera • 100% Organizado</strong>
+                    </p>
+                    
+                    <!-- Features Rápidas -->
+                    <div class="row g-3 mb-5 justify-content-center" data-aos="fade-up" data-aos-delay="500" role="list" aria-label="Características do sistema">
+                        <div class="col-auto" role="listitem">
+                            <div class="badge feature-badge">
+                                <i class="bi bi-lightning-fill text-warning me-2" aria-hidden="true"></i>
+                                <span class="text-white fw-bold">Rápido</span>
+                            </div>
+                        </div>
+                        <div class="col-auto" role="listitem">
+                            <div class="badge feature-badge">
+                                <i class="bi bi-shield-check text-success me-2" aria-hidden="true"></i>
+                                <span class="text-white fw-bold">Seguro</span>
+                            </div>
+                        </div>
+                        <div class="col-auto" role="listitem">
+                            <div class="badge feature-badge">
+                                <i class="bi bi-phone-fill text-info me-2" aria-hidden="true"></i>
+                                <span class="text-white fw-bold">Fácil</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Botões de Ação -->
+                    {% if not current_user.is_authenticated %}
+                    <div class="d-flex gap-4 justify-content-center flex-wrap mb-4" data-aos="zoom-in" data-aos-delay="700">
+                        <a href="{{ url_for('auto_registro') }}" class="btn btn-lg px-5 py-4 shadow-lg hero-main-btn position-relative overflow-hidden" 
+                           aria-label="Entrar na fila agora - Gratuito">
+                            <i class="bi bi-rocket-takeoff-fill me-2" aria-hidden="true"></i>
+                            <span>Entrar na Fila AGORA</span>
+                            <div class="position-absolute top-0 end-0 m-2">
+                                <span class="badge bg-danger pulse-animation" aria-hidden="true">GRÁTIS</span>
+                            </div>
+                        </a>
+                        <a href="{{ url_for('painel_publico') }}" class="btn btn-light btn-lg px-5 py-4 shadow-lg hero-secondary-btn" 
+                           aria-label="Ver painel público">
+                            <i class="bi bi-tv me-2" aria-hidden="true"></i>Ver Painel
+                        </a>
+                    </div>
+                    {% endif %}
+                    
+                    <!-- Social Proof -->
+                    <div class="text-white-50" data-aos="fade-up" data-aos-delay="900">
+                        <small class="d-flex align-items-center justify-content-center gap-2">
+                            <i class="bi bi-people-fill fs-5" aria-hidden="true"></i>
+                            <strong class="text-white">{{ total }}+ clientes</strong> já usaram nosso sistema
+                        </small>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Scroll Indicator -->
+        <div class="position-absolute bottom-0 start-50 translate-middle-x pb-4" data-aos="fade-up" data-aos-delay="1000" aria-hidden="true">
+            <div class="text-white text-center bounce-animation">
+                <i class="bi bi-chevron-down fs-2"></i>
+                <div><small>Role para baixo</small></div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Stats Grid -->
+    <section class="container my-5" aria-labelledby="stats-heading">
+        <h2 id="stats-heading" class="text-center mb-5" data-aos="fade-down">📊 Estatísticas em Tempo Real</h2>
+        <div class="row g-4" role="list" aria-label="Estatísticas do sistema">
+            <div class="col-md-6 col-lg-3" data-aos="flip-left" data-aos-delay="100" role="listitem">
+                <div class="card card-3d border-0 shadow-lg h-100 stats-card stats-card-1">
+                    <div class="card-body text-center text-white p-4">
+                        <i class="bi bi-people-fill stats-icon" aria-hidden="true"></i>
+                        <h3 class="h4 mt-3">Total de Clientes</h3>
+                        <p class="display-4 fw-bold" aria-live="polite">{{ total }}</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-6 col-lg-3" data-aos="flip-left" data-aos-delay="200" role="listitem">
+                <div class="card card-3d border-0 shadow-lg h-100 stats-card stats-card-2">
+                    <div class="card-body text-center text-white p-4">
+                        <i class="bi bi-check-circle-fill stats-icon" aria-hidden="true"></i>
+                        <h3 class="h4 mt-3">Atendimentos</h3>
+                        <p class="display-4 fw-bold" aria-live="polite">{{ atendidos }}</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-6 col-lg-3" data-aos="flip-left" data-aos-delay="300" role="listitem">
+                <div class="card card-3d border-0 shadow-lg h-100 stats-card stats-card-3">
+                    <div class="card-body text-center text-white p-4">
+                        <i class="bi bi-hourglass-split stats-icon" aria-hidden="true"></i>
+                        <h3 class="h4 mt-3">Aguardando</h3>
+                        <p class="display-4 fw-bold" aria-live="polite">{{ espera }}</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-6 col-lg-3" data-aos="flip-left" data-aos-delay="400" role="listitem">
+                <div class="card card-3d border-0 shadow-lg h-100 stats-card stats-card-4">
+                    <div class="card-body text-center text-white p-4">
+                        <i class="bi bi-clock-fill stats-icon" aria-hidden="true"></i>
+                        <h3 class="h4 mt-3">Tempo Médio</h3>
+                        <p class="display-4 fw-bold" aria-live="polite">
+                            {{ avg_min if avg_min else '0' }}<small class="fs-5">min</small>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Acesso Rápido -->
+    {% if current_user.is_authenticated %}
+    <section class="container my-5" aria-labelledby="quick-access-heading">
+        <h2 id="quick-access-heading" class="text-center mb-5" data-aos="fade-down">🚀 Acesso Rápido</h2>
+        <div class="row g-4" role="list" aria-label="Links de acesso rápido">
+            <div class="col-md-6 col-lg-3" data-aos="zoom-in" data-aos-delay="100" role="listitem">
+                <a href="{{ url_for('dashboard') }}" class="text-decoration-none quick-access-card">
+                    <div class="card card-3d border-0 shadow hover-lift h-100">
+                        <div class="card-body text-center p-4">
+                            <i class="bi bi-speedometer2 text-primary quick-access-icon" aria-hidden="true"></i>
+                            <h5 class="mt-3 h6">Painel de Controle</h5>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            
+            <div class="col-md-6 col-lg-3" data-aos="zoom-in" data-aos-delay="200" role="listitem">
+                <a href="{{ url_for('add') }}" class="text-decoration-none quick-access-card">
+                    <div class="card card-3d border-0 shadow hover-lift h-100">
+                        <div class="card-body text-center p-4">
+                            <i class="bi bi-person-plus-fill text-success quick-access-icon" aria-hidden="true"></i>
+                            <h5 class="mt-3 h6">Adicionar Cliente</h5>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            
+            <div class="col-md-6 col-lg-3" data-aos="zoom-in" data-aos-delay="300" role="listitem">
+                <a href="{{ url_for('list_clientes') }}" class="text-decoration-none quick-access-card">
+                    <div class="card card-3d border-0 shadow hover-lift h-100">
+                        <div class="card-body text-center p-4">
+                            <i class="bi bi-list-ul text-info quick-access-icon" aria-hidden="true"></i>
+                            <h5 class="mt-3 h6">Ver Fila</h5>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            
+            <div class="col-md-6 col-lg-3" data-aos="zoom-in" data-aos-delay="400" role="listitem">
+                <a href="{{ url_for('atendimento_atual') }}" class="text-decoration-none quick-access-card">
+                    <div class="card card-3d border-0 shadow hover-lift h-100">
+                        <div class="card-body text-center p-4">
+                            <i class="bi bi-scissors text-warning quick-access-icon" aria-hidden="true"></i>
+                            <h5 class="mt-3 h6">Em Atendimento</h5>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+    {% endif %}
+</div>
+
+<style>
+    /* Hero Section Styles */
+    .hero-section {
+        min-height: 80vh;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+    }
+    
+    .hero-overlay {
+        background: rgba(0,0,0,0.35);
+    }
+    
+    .hero-background {
+        top: 0;
+        left: 0;
+    }
+    
+    .hero-icon {
+        font-size: 3.5rem;
+        color: rgba(255,255,255,0.15);
+    }
+    
+    .hero-scissors {
+        top: 10%;
+        left: 5%;
+        animation: float 8s ease-in-out infinite;
+        transform: rotate(45deg);
+    }
+    
+    .hero-brush {
+        top: 20%;
+        right: 10%;
+        animation: float 6s ease-in-out infinite 1s;
+        font-size: 4rem;
+    }
+    
+    .hero-heart {
+        bottom: 15%;
+        left: 15%;
+        animation: float 7s ease-in-out infinite 2s;
+    }
+    
+    .hero-star {
+        top: 50%;
+        right: 5%;
+        animation: float 9s ease-in-out infinite 1.5s;
+        font-size: 4.5rem;
+    }
+    
+    .hero-content {
+        min-height: 80vh;
+    }
+    
+    .hero-badge {
+        background: rgba(255,255,255,0.25);
+        backdrop-filter: blur(10px);
+        font-size: 1rem;
+        letter-spacing: 1px;
+        padding: 0.5rem 1.5rem;
+    }
+    
+    .hero-title {
+        font-size: clamp(2.5rem, 8vw, 5rem);
+        text-shadow: 0 4px 12px rgba(0,0,0,0.35);
+        line-height: 1.1;
+    }
+    
+    .hero-highlight {
+        background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        text-shadow: none;
+    }
+    
+    .hero-subtitle {
+        font-size: clamp(1.1rem, 3vw, 1.8rem);
+        max-width: 800px;
+        opacity: 0.95;
+    }
+    
+    .feature-badge {
+        background: rgba(255,255,255,0.25);
+        backdrop-filter: blur(10px);
+        padding: 0.75rem 1.5rem;
+    }
+    
+    .hero-main-btn {
+        background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+        color: #1a1a1a;
+        font-size: 1.3rem;
+        font-weight: 800;
+        border: none;
+        transition: all 0.3s;
+    }
+    
+    .hero-secondary-btn {
+        font-size: 1.2rem;
+        font-weight: 700;
+        backdrop-filter: blur(10px);
+    }
+    
+    /* Stats Cards */
+    .stats-card-1 {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+    
+    .stats-card-2 {
+        background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+    }
+    
+    .stats-card-3 {
+        background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    }
+    
+    .stats-card-4 {
+        background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+    }
+    
+    .stats-icon {
+        font-size: 3rem;
+    }
+    
+    /* Quick Access */
+    .quick-access-icon {
+        font-size: 3rem;
+    }
+    
+    /* Animations */
+    @keyframes float {
+        0%, 100% { 
+            transform: translateY(0px);
+        }
+        50% { 
+            transform: translateY(-20px);
+        }
+    }
+    
+    .hero-scissors {
+        transform: rotate(45deg);
+    }
+    
+    .hero-scissors,
+    .hero-brush,
+    .hero-heart,
+    .hero-star {
+        animation-duration: 8s, 6s, 7s, 9s;
+    }
+    
+    /* Reduced motion support */
+    @media (prefers-reduced-motion: reduce) {
+        .hero-scissors,
+        .hero-brush,
+        .hero-heart,
+        .hero-star,
+        .bounce-animation,
+        .pulse-animation {
+            animation: none;
+        }
+        
+        .hover-lift:hover {
+            transform: none;
+        }
+        
+        .hero-main-btn:hover::before {
+            display: none;
+        }
+    }
+    
+    .hover-lift {
+        transition: all 0.3s ease;
+    }
+    
+    .hover-lift:hover {
+        transform: translateY(-10px) scale(1.05);
+        box-shadow: 0 20px 40px rgba(0,0,0,0.2) !important;
+    }
+    
+    /* Botão Principal */
+    .hero-main-btn:hover {
+        transform: scale(1.05) translateY(-5px);
+        box-shadow: 0 20px 60px rgba(255, 215, 0, 0.6) !important;
+    }
+    
+    .hero-main-btn::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+        transition: left 0.5s;
+    }
+    
+    .hero-main-btn:hover::before {
+        left: 100%;
+    }
+    
+    /* Fallback for backdrop-filter */
+    @supports not (backdrop-filter: blur(10px)) {
+        .hero-badge,
+        .feature-badge,
+        .hero-secondary-btn {
+            background: rgba(255,255,255,0.15);
+        }
+    }
+    
+    /* Responsive */
+    @media (max-width: 768px) {
+        .hero-title {
+            font-size: 2.5rem !important;
+        }
+        
+        .hero-main-btn,
+        .hero-secondary-btn {
+            font-size: 1.1rem !important;
+            padding: 1rem 2rem !important;
+        }
+        
+        .display-4 {
+            font-size: 2.5rem;
+        }
+    }
+</style>
+{% endblock %}

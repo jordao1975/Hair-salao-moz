@@ -1,0 +1,172 @@
+{% extends "base.html" %}
+
+{% block title %}Painel de Controle - Salão de Beleza{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <!-- Header -->
+    <div class="text-center mb-5" data-aos="fade-down">
+        <h1 class="display-4 fw-bold mb-2">
+            <i class="bi bi-speedometer2 text-primary"></i> Painel de Controle
+        </h1>
+        <p class="text-muted lead">Visão geral do sistema em tempo real</p>
+    </div>
+    
+    <!-- Stats Cards com Contraste Melhorado -->
+    <div class="row g-4 mb-5">
+        <div class="col-md-6 col-xl-3" data-aos="flip-left" data-aos-delay="100">
+            <div class="card border-0 shadow-lg h-100 card-3d" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                <div class="card-body text-white p-4">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <div>
+                            <h6 class="text-white-50 text-uppercase mb-1" style="font-size: 0.75rem; letter-spacing: 1px;">Total de Clientes</h6>
+                            <h2 class="mb-0 fw-bold display-5">{{ total }}</h2>
+                        </div>
+                        <div class="bg-white bg-opacity-25 p-3 rounded-3">
+                            <i class="bi bi-people-fill fs-1"></i>
+                        </div>
+                    </div>
+                    <p class="mb-0 small">
+                        <i class="bi bi-graph-up me-1"></i> Cadastrados no sistema
+                    </p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-6 col-xl-3" data-aos="flip-left" data-aos-delay="200">
+            <div class="card border-0 shadow-lg h-100 card-3d" style="background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);">
+                <div class="card-body text-white p-4">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <div>
+                            <h6 class="text-white-50 text-uppercase mb-1" style="font-size: 0.75rem; letter-spacing: 1px;">Atendimentos</h6>
+                            <h2 class="mb-0 fw-bold display-5">{{ atendidos }}</h2>
+                        </div>
+                        <div class="bg-white bg-opacity-25 p-3 rounded-3">
+                            <i class="bi bi-check-circle-fill fs-1"></i>
+                        </div>
+                    </div>
+                    <p class="mb-0 small">
+                        <i class="bi bi-clipboard-check me-1"></i> Concluídos com sucesso
+                    </p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-6 col-xl-3" data-aos="flip-left" data-aos-delay="300">
+            <div class="card border-0 shadow-lg h-100 card-3d" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                <div class="card-body text-white p-4">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <div>
+                            <h6 class="text-white-50 text-uppercase mb-1" style="font-size: 0.75rem; letter-spacing: 1px;">Aguardando</h6>
+                            <h2 class="mb-0 fw-bold display-5">{{ espera }}</h2>
+                        </div>
+                        <div class="bg-white bg-opacity-25 p-3 rounded-3">
+                            <i class="bi bi-hourglass-split fs-1"></i>
+                        </div>
+                    </div>
+                    <p class="mb-0 small">
+                        <i class="bi bi-clock-history me-1"></i> Na fila de espera
+                    </p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-6 col-xl-3" data-aos="flip-left" data-aos-delay="400">
+            <div class="card border-0 shadow-lg h-100 card-3d" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+                <div class="card-body text-white p-4">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <div>
+                            <h6 class="text-white-50 text-uppercase mb-1" style="font-size: 0.75rem; letter-spacing: 1px;">Tempo Médio</h6>
+                            <h2 class="mb-0 fw-bold display-5">{{ avg_min if avg_min else '0' }}<small class="fs-5">min</small></h2>
+                        </div>
+                        <div class="bg-white bg-opacity-25 p-3 rounded-3">
+                            <i class="bi bi-stopwatch-fill fs-1"></i>
+                        </div>
+                    </div>
+                    <p class="mb-0 small">
+                        <i class="bi bi-speedometer me-1"></i> Tempo de espera
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Ações Rápidas -->
+    <div data-aos="fade-up" data-aos-delay="500">
+        <h2 class="mb-4 text-center">🚀 Ações Rápidas</h2>
+        <div class="row g-3">
+            <div class="col-md-6 col-lg-4" data-aos="zoom-in" data-aos-delay="100">
+                <a href="{{ url_for('list_clientes') }}" class="text-decoration-none">
+                    <div class="card border-0 shadow hover-lift h-100" style="background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);">
+                        <div class="card-body text-center text-white p-4">
+                            <i class="bi bi-list-ul display-4 mb-3"></i>
+                            <h5 class="fw-bold">Ver Fila de Clientes</h5>
+                            <p class="mb-0 small">Gerenciar fila de espera</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            
+            <div class="col-md-6 col-lg-4" data-aos="zoom-in" data-aos-delay="200">
+                <a href="{{ url_for('atendimento_atual') }}" class="text-decoration-none">
+                    <div class="card border-0 shadow hover-lift h-100" style="background: linear-gradient(135deg, #10b981 0%, #34d399 100%);">
+                        <div class="card-body text-center text-white p-4">
+                            <i class="bi bi-scissors display-4 mb-3"></i>
+                            <h5 class="fw-bold">Em Atendimento</h5>
+                            <p class="mb-0 small">Clientes sendo atendidos</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            
+            <div class="col-md-6 col-lg-4" data-aos="zoom-in" data-aos-delay="300">
+                <a href="{{ url_for('add') }}" class="text-decoration-none">
+                    <div class="card border-0 shadow hover-lift h-100" style="background: linear-gradient(135deg, #3b82f6 0%, #60a5fa 100%);">
+                        <div class="card-body text-center text-white p-4">
+                            <i class="bi bi-person-plus-fill display-4 mb-3"></i>
+                            <h5 class="fw-bold">Adicionar Cliente</h5>
+                            <p class="mb-0 small">Novo cliente na fila</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            
+            <div class="col-md-6 col-lg-4" data-aos="zoom-in" data-aos-delay="400">
+                <a href="{{ url_for('list_servicos') }}" class="text-decoration-none">
+                    <div class="card border-0 shadow hover-lift h-100" style="background: linear-gradient(135deg, #f59e0b 0%, #fbbf24 100%);">
+                        <div class="card-body text-center text-white p-4">
+                            <i class="bi bi-brush-fill display-4 mb-3"></i>
+                            <h5 class="fw-bold">Gerenciar Serviços</h5>
+                            <p class="mb-0 small">Adicionar/Editar serviços</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            
+            <div class="col-md-6 col-lg-4" data-aos="zoom-in" data-aos-delay="500">
+                <a href="{{ url_for('report') }}" class="text-decoration-none">
+                    <div class="card border-0 shadow hover-lift h-100" style="background: linear-gradient(135deg, #6b7280 0%, #9ca3af 100%);">
+                        <div class="card-body text-center text-white p-4">
+                            <i class="bi bi-graph-up-arrow display-4 mb-3"></i>
+                            <h5 class="fw-bold">Ver Relatórios</h5>
+                            <p class="mb-0 small">Estatísticas e análises</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            
+            <div class="col-md-6 col-lg-4" data-aos="zoom-in" data-aos-delay="600">
+                <a href="{{ url_for('backup_db') }}" class="text-decoration-none">
+                    <div class="card border-0 shadow hover-lift h-100" style="background: linear-gradient(135deg, #1f2937 0%, #374151 100%);">
+                        <div class="card-body text-center text-white p-4">
+                            <i class="bi bi-cloud-arrow-down-fill display-4 mb-3"></i>
+                            <h5 class="fw-bold">Fazer Backup</h5>
+                            <p class="mb-0 small">Segurança dos dados</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

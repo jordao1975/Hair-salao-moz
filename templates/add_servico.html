@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}Adicionar Serviço - Salão de Beleza{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Adicionar Novo Serviço</h1>
+    
+    <form method="POST" action="{{ url_for('add_servico') }}" class="form-horizontal">
+        <div class="form-group">
+            <label for="nome">Nome do Serviço:</label>
+            <input type="text" id="nome" name="nome" required placeholder="Ex: Corte de Cabelo Masculino">
+        </div>
+        
+        <div class="form-group">
+            <label for="descricao">Descrição:</label>
+            <textarea id="descricao" name="descricao" rows="3" placeholder="Descrição detalhada do serviço"></textarea>
+        </div>
+        
+        <div class="form-group">
+            <label for="preco">Preço (MT):</label>
+            <input type="number" id="preco" name="preco" step="0.01" min="0" required placeholder="150.00">
+        </div>
+        
+        <div class="form-group">
+            <label for="duracao_estimada">Duração Estimada (minutos):</label>
+            <input type="number" id="duracao_estimada" name="duracao_estimada" min="5" value="30" required>
+        </div>
+        
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Adicionar Serviço</button>
+            <a href="{{ url_for('list_servicos') }}" class="btn btn-secondary">Cancelar</a>
+        </div>
+    </form>
+</div>
+{% endblock %}
