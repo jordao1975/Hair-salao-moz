@@ -6,6 +6,8 @@ from datetime import datetime
 import shutil
 from data_structures import LinkedList, FIFOSort
 from dotenv import load_dotenv
+from init_db import init_db
+
 
 app = Flask(__name__)
 load_dotenv()
