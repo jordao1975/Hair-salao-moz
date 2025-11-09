@@ -9,7 +9,12 @@ from dotenv import load_dotenv
 from init_db import init_db
 
 init_db()
+# 🔹 Inicializar conexão PostgreSQL
+init_app(app)
 
+# 🔹 Criar as tabelas no banco PostgreSQL
+with app.app_context():
+    db.create_all()
 app = Flask(__name__)
 load_dotenv()
 app.secret_key = os.getenv('SECRET_KEY', 'troque_esta_chave_por_uma_segura')
